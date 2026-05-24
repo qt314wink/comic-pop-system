@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Comic Pop System — Jennipher Troup</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --red:#FF1A1A;--yellow:#FFE000;--blue:#0066FF;
+      --cyan:#00CCFF;--black:#0A0A0A;--white:#FFFDF0;
+      --pink:#FF3DA0;--purple:#7B2FFF;--green:#00CC66;
+      --shadow: 4px 4px 0 var(--black);
+      --shadow-lg: 6px 6px 0 var(--black);
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{background:var(--yellow);font-family:'Comic Neue',cursive;color:var(--black);min-height:100vh;}
+
+    /* --- Header --- */
+    header{
+      background:var(--black);color:var(--yellow);
+      text-align:center;padding:3rem 1rem 2.5rem;
+      position:relative;overflow:hidden;
+      border-bottom:6px solid var(--yellow);
+    }
+    header::before{
+      content:'';position:absolute;inset:0;
+      background-image:radial-gradient(circle,rgba(255,224,0,0.15) 2px,transparent 2px);
+      background-size:12px 12px;
+    }
+    header h1{
+      font-family:'Bangers',fantasy;font-size:clamp(3rem,10vw,7rem);
+      letter-spacing:.06em;line-height:1;
+      color:var(--yellow);position:relative;
+      text-shadow:4px 4px 0 var(--red),8px 8px 0 rgba(0,0,0,.3);
+    }
+    header p{color:rgba(255,224,0,.7);font-size:1.1rem;margin-top:.5rem;position:relative;}
+
+    /* --- Layout --- */
+    main{max-width:1100px;margin:0 auto;padding:3rem 1.5rem;}
+    section{margin-bottom:4rem;}
+    section h2{
+      font-family:'Bangers',fantasy;font-size:2.5rem;letter-spacing:.05em;
+      color:var(--black);margin-bottom:1.5rem;
+      display:inline-block;background:var(--red);color:var(--white);
+      padding:.2rem 1rem;border:3px solid var(--black);box-shadow:var(--shadow);
+      transform:rotate(-1deg);
+    }
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem;}
+
+    /* --- Panel Card --- */
+    .panel-card{
+      background:var(--white);border:4px solid var(--black);
+      box-shadow:var(--shadow-lg);border-radius:4px;
+      overflow:hidden;transition:transform .15s;
+    }
+    .panel-card:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 var(--black);}
+    .panel-card .panel-header{
+      background:var(--blue);color:var(--white);padding:.75rem 1rem;
+      font-family:'Bangers',fantasy;font-size:1.3rem;letter-spacing:.05em;
+      border-bottom:3px solid var(--black);
+    }
+    .panel-card .panel-body{padding:1.25rem;}
+    .panel-card .panel-body p{font-size:.9rem;line-height:1.6;color:#222;}
+
+    /* --- Speech Bubble --- */
+    .bubble-wrap{display:flex;justify-content:center;padding:1rem 0;}
+    .speech-bubble{
+      background:var(--white);border:4px solid var(--black);
+      border-radius:20px;padding:1rem 1.5rem;
+      box-shadow:var(--shadow);max-width:280px;
+      position:relative;font-weight:700;
+      font-size:1rem;text-align:center;
+    }
+    .speech-bubble::after{
+      content:'';position:absolute;
+      bottom:-20px;left:24px;
+      border:10px solid transparent;
+      border-top:12px solid var(--black);
+    }
+    .speech-bubble::before{
+      content:'';position:absolute;
+      bottom:-14px;left:26px;
+      border:8px solid transparent;
+      border-top:10px solid var(--white);
+      z-index:1;
+    }
+    .thought-bubble{
+      background:var(--white);border:4px solid var(--black);
+      border-radius:50px;padding:1rem 1.5rem;
+      box-shadow:var(--shadow);max-width:280px;
+      font-weight:700;font-size:1rem;text-align:center;
+    }
+    .shout-bubble{
+      background:var(--yellow);border:4px solid var(--black);
+      clip-path:polygon(5% 15%,15% 5%,50% 0%,85% 5%,95% 15%,100% 50%,95% 85%,85% 95%,50% 100%,15% 95%,5% 85%,0% 50%);
+      padding:2rem;font-family:'Bangers',fantasy;
+      font-size:1.4rem;letter-spacing:.05em;text-align:center;
+      width:160px;height:160px;display:flex;align-items:center;justify-content:center;
+      margin:0 auto;box-shadow:none;
+    }
+
+    /* --- Action Badges / SFX --- */
+    .sfx-row{display:flex;flex-wrap:wrap;gap:1rem;align-items:center;}
+    .sfx{
+      font-family:'Bangers',fantasy;font-size:2rem;letter-spacing:.08em;
+      padding:.2rem .8rem;border:3px solid var(--black);
+      box-shadow:var(--shadow);display:inline-block;
+      transform:rotate(-3deg);
+    }
+    .sfx:nth-child(2){transform:rotate(2deg);background:var(--red);color:var(--white);}
+    .sfx:nth-child(3){transform:rotate(-1.5deg);background:var(--blue);color:var(--white);font-size:2.5rem;}
+    .sfx:nth-child(4){transform:rotate(3deg);background:var(--pink);color:var(--white);}
+    .sfx:nth-child(5){transform:rotate(-2deg);background:var(--purple);color:var(--white);font-size:1.6rem;}
+    .sfx-1{background:var(--yellow);}
+
+    /* --- Stickers --- */
+    .sticker{
+      display:inline-flex;align-items:center;justify-content:center;
+      padding:.8rem 1.4rem;font-family:'Bangers',fantasy;
+      font-size:1.1rem;letter-spacing:.05em;
+      border:3px solid var(--black);
+      outline:5px solid white;outline-offset:3px;
+      box-shadow:3px 3px 0 var(--black);border-radius:12px;
+      transition:transform .15s;cursor:default;
+    }
+    .sticker:hover{transform:scale(1.08) rotate(-2deg);}
+    .sticker-red{background:var(--red);color:var(--white);}
+    .sticker-blue{background:var(--blue);color:var(--white);}
+    .sticker-yellow{background:var(--yellow);color:var(--black);}
+    .sticker-pink{background:var(--pink);color:var(--white);}
+    .sticker-purple{background:var(--purple);color:var(--white);}
+    .sticker-green{background:var(--green);color:var(--black);}
+
+    /* --- Buttons --- */
+    .btn-comic{
+      font-family:'Bangers',fantasy;font-size:1.2rem;letter-spacing:.06em;
+      padding:.6rem 1.6rem;border:3px solid var(--black);
+      box-shadow:var(--shadow);cursor:pointer;
+      border-radius:4px;transition:all .1s;
+      background:var(--red);color:var(--white);
+    }
+    .btn-comic:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--black);}
+    .btn-comic:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--black);}
+    .btn-yellow{background:var(--yellow);color:var(--black);}
+    .btn-blue{background:var(--blue);color:var(--white);}
+
+    /* --- Halftone divider --- */
+    .halftone-strip{
+      height:40px;margin:2rem 0;
+      background-image:radial-gradient(circle,var(--black) 2px,transparent 2px);
+      background-size:12px 12px;
+      border-top:3px solid var(--black);
+      border-bottom:3px solid var(--black);
+    }
+
+    /* --- Palette swatches --- */
+    .swatches{display:flex;flex-wrap:wrap;gap:.75rem;}
+    .swatch{
+      width:56px;height:56px;border:3px solid var(--black);
+      box-shadow:3px 3px 0 var(--black);border-radius:4px;
+    }
+
+    footer{
+      background:var(--black);color:var(--yellow);
+      text-align:center;padding:2rem 1rem;
+      font-family:'Bangers',fantasy;letter-spacing:.05em;font-size:1rem;
+    }
+    footer a{color:var(--cyan);text-decoration:none;}
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>💥 COMIC POP SYSTEM</h1>
+  <p>Bold · Graphic · Halftone · by Jennipher Troup</p>
+</header>
+
+<main>
+
+  <!-- PALETTE -->
+  <section>
+    <h2>🎨 Color Palette</h2>
+    <div class="swatches">
+      <div class="swatch" style="background:#FF1A1A" title="--comic-red"></div>
+      <div class="swatch" style="background:#FFE000" title="--comic-yellow"></div>
+      <div class="swatch" style="background:#0066FF" title="--comic-blue"></div>
+      <div class="swatch" style="background:#00CCFF" title="--comic-cyan"></div>
+      <div class="swatch" style="background:#FF3DA0" title="--comic-pink"></div>
+      <div class="swatch" style="background:#FF6B00" title="--comic-orange"></div>
+      <div class="swatch" style="background:#7B2FFF" title="--comic-purple"></div>
+      <div class="swatch" style="background:#00CC66" title="--comic-green"></div>
+      <div class="swatch" style="background:#0A0A0A" title="--comic-black"></div>
+      <div class="swatch" style="background:#FFFDF0;border:3px solid #0A0A0A" title="--comic-white"></div>
+    </div>
+  </section>
+
+  <div class="halftone-strip"></div>
+
+  <!-- PANEL CARDS -->
+  <section>
+    <h2>🗒 Panel Cards</h2>
+    <div class="grid">
+      <div class="panel-card">
+        <div class="panel-header" style="background:#FF1A1A">⚡ ORIGIN STORY</div>
+        <div class="panel-body"><p>Every hero has a beginning. This is a panel card — the fundamental unit of the comic page. Thick border, hard shadow, bold header.</p></div>
+      </div>
+      <div class="panel-card">
+        <div class="panel-header" style="background:#7B2FFF">CLASSIFIED INFO</div>
+        <div class="panel-body"><p>Panel cards support any header color from the system palette. Mix them like a comic page grid — asymmetric and energetic.</p></div>
+      </div>
+      <div class="panel-card">
+        <div class="panel-header" style="background:#00CC66;color:#0A0A0A">MISSION BRIEFING</div>
+        <div class="panel-body"><p>Hover to see the panel lift. The system is built to feel physical — like something you could pick up off a newsstand.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="halftone-strip" style="background-image:radial-gradient(circle,#FF1A1A 2px,transparent 2px)"></div>
+
+  <!-- SPEECH BUBBLES -->
+  <section>
+    <h2>💬 Speech Bubbles</h2>
+    <div class="grid" style="align-items:start">
+      <div class="bubble-wrap"><div class="speech-bubble">This is a speech bubble. Dialogue lives here.</div></div>
+      <div class="bubble-wrap"><div class="thought-bubble">💧 Hmm… a thought bubble for inner monologue.</div></div>
+      <div class="bubble-wrap"><div class="shout-bubble">KA-POW!</div></div>
+    </div>
+  </section>
+
+  <div class="halftone-strip" style="background-image:radial-gradient(circle,#0066FF 2px,transparent 2px)"></div>
+
+  <!-- SFX / ACTION WORDS -->
+  <section>
+    <h2>⚡ Action Words</h2>
+    <div class="sfx-row">
+      <span class="sfx sfx-1">POW!</span>
+      <span class="sfx">WHAM!</span>
+      <span class="sfx">CRASH!</span>
+      <span class="sfx">ZAPP!</span>
+      <span class="sfx">BOOM!</span>
+    </div>
+  </section>
+
+  <div class="halftone-strip"></div>
+
+  <!-- STICKERS -->
+  <section>
+    <h2>🌟 Stickers</h2>
+    <div style="display:flex;flex-wrap:wrap;gap:1.2rem;align-items:center;">
+      <span class="sticker sticker-red">💥 KAPOW</span>
+      <span class="sticker sticker-blue">✨ LEGENDARY</span>
+      <span class="sticker sticker-yellow">🔥 ON FIRE</span>
+      <span class="sticker sticker-pink">🌸 CUTE MODE</span>
+      <span class="sticker sticker-purple">🔮 MYSTIC</span>
+      <span class="sticker sticker-green">♻️ REGENERATE</span>
+    </div>
+  </section>
+
+  <div class="halftone-strip" style="background-image:radial-gradient(circle,#7B2FFF 2px,transparent 2px)"></div>
+
+  <!-- BUTTONS -->
+  <section>
+    <h2>🔘 Buttons</h2>
+    <div style="display:flex;flex-wrap:wrap;gap:1rem;align-items:center;">
+      <button class="btn-comic">ATTACK!</button>
+      <button class="btn-comic btn-yellow">COLLECT</button>
+      <button class="btn-comic btn-blue">TRANSMIT</button>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <a href="https://github.com/qt314wink/comic-pop-system">GITHUB</a>
+  &nbsp;&middot;&nbsp;
+  <a href="https://github.com/qt314wink">JENNIPHER TROUP</a>
+  &nbsp;&middot;&nbsp; MIT LICENSE
+</footer>
+
+</body>
+</html>

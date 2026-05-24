@@ -1,0 +1,90 @@
+/**
+ * Comic Pop Design System — Core Tokens
+ * Jennipher Troup · 2026
+ */
+
+:root {
+  /* === Primary Palette === */
+  --comic-red:        #FF1A1A;
+  --comic-yellow:     #FFE000;
+  --comic-blue:       #0066FF;
+  --comic-cyan:       #00CCFF;
+  --comic-black:      #0A0A0A;
+  --comic-white:      #FFFDF0;
+  --comic-pink:       #FF3DA0;
+  --comic-orange:     #FF6B00;
+  --comic-purple:     #7B2FFF;
+  --comic-green:      #00CC66;
+
+  /* === Semantic === */
+  --comic-surface:    var(--comic-white);
+  --comic-text:       var(--comic-black);
+  --comic-accent:     var(--comic-red);
+  --comic-highlight:  var(--comic-yellow);
+  --comic-link:       var(--comic-blue);
+
+  /* === Borders === */
+  --comic-border:     3px solid var(--comic-black);
+  --comic-border-thick: 5px solid var(--comic-black);
+  --comic-border-xl:  8px solid var(--comic-black);
+
+  /* === Shadow (hard offset — the comic drop shadow) === */
+  --comic-shadow:     4px 4px 0px var(--comic-black);
+  --comic-shadow-lg:  6px 6px 0px var(--comic-black);
+  --comic-shadow-red: 4px 4px 0px var(--comic-red);
+  --comic-shadow-blue:4px 4px 0px var(--comic-blue);
+
+  /* === Sticker border (white stroke for die-cut effect) === */
+  --sticker-stroke:   4px solid #ffffff;
+  --sticker-outline:  6px solid #ffffff;
+
+  /* === Typography === */
+  --comic-font-display: 'Bangers', 'Impact', fantasy;
+  --comic-font-body:    'Comic Neue', 'Comic Sans MS', cursive;
+  --comic-font-mono:    'Courier New', monospace;
+  --comic-letter-spacing: 0.05em;
+
+  /* === Spacing === */
+  --comic-unit:   8px;
+  --comic-xs:     4px;
+  --comic-sm:     8px;
+  --comic-md:    16px;
+  --comic-lg:    24px;
+  --comic-xl:    32px;
+  --comic-2xl:   48px;
+  --comic-3xl:   64px;
+
+  /* === Radius === */
+  --comic-radius-sm:   4px;
+  --comic-radius-md:   8px;
+  --comic-radius-lg:  16px;
+  --comic-radius-xl:  24px;
+  --comic-radius-pill:50px;
+  --comic-radius-bubble: 20px 20px 20px 4px; /* speech bubble */
+
+  /* === Halftone === */
+  --halftone-size:    4px;
+  --halftone-color:   var(--comic-black);
+  --halftone-gap:     8px;
+}
+
+/* === Utility Classes === */
+.comic-border     { border: var(--comic-border); }
+.comic-border-thick { border: var(--comic-border-thick); }
+.comic-shadow     { box-shadow: var(--comic-shadow); }
+.comic-shadow-lg  { box-shadow: var(--comic-shadow-lg); }
+.sticker-outline  { outline: var(--sticker-outline); outline-offset: 3px; border-radius: var(--comic-radius-lg); }
+
+/* === Halftone Background Pattern === */
+.halftone-bg {
+  background-image: radial-gradient(circle, var(--comic-black) 1.5px, transparent 1.5px);
+  background-size: var(--halftone-gap) var(--halftone-gap);
+}
+.halftone-bg-red {
+  background-image: radial-gradient(circle, var(--comic-red) 1.5px, transparent 1.5px);
+  background-size: var(--halftone-gap) var(--halftone-gap);
+}
+.halftone-bg-yellow {
+  background-image: radial-gradient(circle, var(--comic-yellow) 2px, transparent 2px);
+  background-size: 10px 10px;
+}
